@@ -7,6 +7,7 @@ const buildOptions = (data) => {
       "content-type": "application-json",
     };
   }
+  return options;
 };
 
 const request = async (method, url, data) => {

@@ -12,7 +12,7 @@ const Create = () => {
 
     try {
       await gameService.create(gameData);
-      navigate("/catalogue");
+      navigate("/games");
     } catch (error) {
       console.log(error);
     }
