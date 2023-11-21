@@ -1,9 +1,14 @@
 import useForm from "../../hooks/useForm";
 
-const Login = () => {
-  const { values, onChange, onSubmit } = useForm({
-    email: "",
-    password: "",
+const loginFormKeys = {
+  email: "email",
+  password: "password",
+};
+
+const Login = ({ loginSubmitHandler }) => {
+  const { values, onChange, onSubmit } = useForm(loginSubmitHandler, {
+    [loginFormKeys.email]: "",
+    [loginFormKeys.password]: "",
   });
 
   return (
@@ -16,19 +21,19 @@ const Login = () => {
           <input
             type="email"
             id="email"
-            name="email"
+            name={loginFormKeys.email}
             placeholder="Sokka@gmail.com"
             onChange={onChange}
-            value={values["email"]}
+            value={values[loginFormKeys.email]}
           />
 
           <label htmlFor="login-pass">Password:</label>
           <input
             type="password"
             id="login-password"
-            name="password"
+            name={loginFormKeys.password}
             onChange={onChange}
-            value={values["password"]}
+            value={values[loginFormKeys.password]}
           />
           <input type="submit" className="btn submit" value="Login" />
           <p className="field">
