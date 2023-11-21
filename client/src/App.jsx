@@ -1,4 +1,9 @@
-import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+
+import * as authService from "./services/authService";
+import AuthContext from "./contexts/authContext";
+import Path from "./paths";
 
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
@@ -7,13 +12,18 @@ import Create from "./components/Create/Create";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import GameDetails from "./components/Catalogue/GameItem/GameDetails";
-import { useState } from "react";
-import AuthContext from "./contexts/authContext";
 
 function App() {
-  const [auth, setAuth] = useState();
+  const navigate = useNavigate();
+  const [auth, setAuth] = useState({});
 
-  const loginSubmitHandler = (values) => console.log(values);
+  const loginSubmitHandler = async (values) => {
+    const result = await authService.login(values.email, values.password);
+
+    setAuth(result);
+
+    navigate(Path.Home);
+  };
 
   return (
     <AuthContext.Provider value={{ loginSubmitHandler }}>
