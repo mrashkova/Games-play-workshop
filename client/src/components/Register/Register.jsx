@@ -1,4 +1,5 @@
 import { useContext } from "react";
+
 import AuthContext from "../../contexts/authContext";
 import useForm from "../../hooks/useForm";
 
@@ -8,9 +9,9 @@ const RegisterFormKeys = {
   ConfirmPassword: "confirm-password",
 };
 
-const Register = () => {
-  const { registerSubmiteHandler } = useContext(AuthContext);
-  const { values, onChange, onSubmit } = useForm(registerSubmiteHandler, {
+export default function Register() {
+  const { registerSubmitHandler } = useContext(AuthContext);
+  const { values, onChange, onSubmit } = useForm(registerSubmitHandler, {
     [RegisterFormKeys.Email]: "",
     [RegisterFormKeys.Password]: "",
     [RegisterFormKeys.ConfirmPassword]: "",
@@ -62,6 +63,4 @@ const Register = () => {
       </form>
     </section>
   );
-};
-
-export default Register;
+}

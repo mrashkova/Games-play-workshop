@@ -11,30 +11,50 @@ import Catalogue from "./components/Catalogue/Catalogue";
 import Create from "./components/Create/Create";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
+import Logout from "./components/logout/logout";
 import GameDetails from "./components/Catalogue/GameItem/GameDetails";
 
 function App() {
   const navigate = useNavigate();
-  const [auth, setAuth] = useState({});
+  const [auth, setAuth] = useState(() => {
+    localStorage.removeItem("accessToken");
+
+    return {};
+  });
 
   const loginSubmitHandler = async (values) => {
     const result = await authService.login(values.email, values.password);
 
     setAuth(result);
 
+    localStorage.setItem("accessToken", result.accessToken);
+
     navigate(Path.Home);
   };
 
   const registerSubmitHandler = async (values) => {
-    console.log(values);
+    const result = await authService.register(values.email, values.password);
+
+    setAuth(result);
+
+    localStorage.setItem("accessToken", result.accessToken);
+
+    navigate(Path.Home);
+  };
+
+  const logoutHandler = () => {
+    setAuth({});
+
+    localStorage.removeItem("accessToken");
   };
 
   const values = {
     loginSubmitHandler,
     registerSubmitHandler,
+    logoutHandler,
+    username: auth.username || auth.email,
     email: auth.email,
-    username: auth.username,
-    isAuthenticated: !!auth.username,
+    isAuthenticated: !!auth.accessToken,
   };
 
   return (
@@ -49,6 +69,7 @@ function App() {
           <Route path={Path.Login} element={<Login />} />
           <Route path={Path.Register} element={<Register />} />
           <Route path={Path.GameDetails} element={<GameDetails />} />
+          <Route path={Path.Logout} element={<Logout />} />
         </Routes>
       </div>
     </AuthContext.Provider>
