@@ -6,7 +6,10 @@ const Catalogue = () => {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    gameService.getAll().then((result) => setGames(result));
+    gameService
+      .getAll()
+      .then((result) => setGames(result))
+      .catch((err) => console.error(err));
   }, []);
 
   console.log(games);
