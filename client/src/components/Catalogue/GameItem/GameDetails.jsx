@@ -5,9 +5,10 @@ import * as gameService from "../../../services/gameService";
 import * as commentService from "../../../services/commentService";
 import AuthContext from "../../../contexts/authContext";
 import reducer from "./commentReducer";
+import useForm from "../../../hooks/useForm";
 
 export default function GameDetails() {
-  const { email } = useContext(AuthContext);
+  const { email, userId } = useContext(AuthContext);
   const [game, setGame] = useState({});
   const [comments, dispatch] = useReducer(reducer, []);
   // const [comments, setComments] = useState([]);
@@ -23,15 +24,8 @@ export default function GameDetails() {
       );
   }, [gameId]);
 
-  const addCommentHandler = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-
-    const newComment = await commentService.create(
-      gameId,
-      formData.get("comment")
-    );
+  const addCommentHandler = async (values) => {
+    const newComment = await commentService.create(gameId, values.comment);
 
     newComment.owner = { email };
     // setComments((state) => [...state, { ...newComment, author: { email } }]);
@@ -40,6 +34,10 @@ export default function GameDetails() {
       payload: newComment,
     });
   };
+
+  const { values, onChange, onSubmit } = useForm(addCommentHandler, {
+    comment: "",
+  });
 
   return (
     <section id="game-details">
@@ -69,17 +67,27 @@ export default function GameDetails() {
           {comments.length === 0 && <p className="no-comment">No comments.</p>}
         </div>
 
-        {/* <!-- Edit/Delete buttons ( Only for creator of this game )  -->
-                <div className="buttons">
-                    <a href="#" className="button">Edit</a>
-                    <a href="#" className="button">Delete</a>
-                </div> */}
+        {userId === game._ownerId && (
+          <div className="buttons">
+            <a href="#" className="button">
+              Edit
+            </a>
+            <a href="#" className="button">
+              Delete
+            </a>
+          </div>
+        )}
       </div>
 
       <article className="create-comment">
         <label>Add new comment:</label>
-        <form className="form" onSubmit={addCommentHandler}>
-          <textarea name="comment" placeholder="Comment......"></textarea>
+        <form className="form" onSubmit={onSubmit}>
+          <textarea
+            name="comment"
+            value={values.comment}
+            onChange={onChange}
+            placeholder="Comment......"
+          ></textarea>
           <input className="btn submit" type="submit" value="Add Comment" />
         </form>
       </article>
