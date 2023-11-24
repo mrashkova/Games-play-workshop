@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 
+import pathToUrl from "../../../utils/pathUtils";
+import Path from "../../../paths";
+
 const GameItem = ({ _id, title, category, imageUrl }) => {
   return (
     <div className="allGames">
@@ -7,7 +10,10 @@ const GameItem = ({ _id, title, category, imageUrl }) => {
         <img src={imageUrl} />
         <h6>{category}</h6>
         <h2>{title}</h2>
-        <Link to={`/games/${_id}/details`} className="details-button">
+        <Link
+          to={pathToUrl(Path.GameDetails, { _id })}
+          className="details-button"
+        >
           Details
         </Link>
       </div>

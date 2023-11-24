@@ -5,6 +5,8 @@ const Path = {
   Login: "/login",
   Register: "/register",
   GameDetails: "/games/:gameId/details",
+  Edit: "/games/:gameId/edit",
+  Delete: "/games/:gameId/delete",
   Logout: "/logout",
 };
 
