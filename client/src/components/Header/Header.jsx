@@ -16,7 +16,7 @@ const Header = () => {
         <Link to="/games">All games</Link>
         {isAuthenticated && (
           <div id="user">
-            <Link to="/create">Create Game</Link>
+            <Link to="/games/create">Create Game</Link>
             <Link to="/logout">Logout</Link>
             <span>| {username}</span>
           </div>

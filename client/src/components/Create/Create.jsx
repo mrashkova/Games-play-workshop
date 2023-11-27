@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import * as gameService from "../../services/gameService";
 
-const Create = () => {
+export default function Create() {
   const navigate = useNavigate();
 
   const createGameSubmitHandler = async (e) => {
@@ -12,9 +12,11 @@ const Create = () => {
 
     try {
       await gameService.create(gameData);
+
       navigate("/games");
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      // Error notification
+      console.log(err);
     }
   };
 
@@ -63,6 +65,4 @@ const Create = () => {
       </form>
     </section>
   );
-};
-
-export default Create;
+}

@@ -33,11 +33,12 @@ const Edit = () => {
   };
 
   const { values, onChange, onSubmit } = useForm(editGameSubmitHandler, game);
+
   return (
-    <section id="edit-page" className="auth">
-      <form id="edit" onSubmit={onSubmit}>
+    <section id="create-page" className="auth">
+      <form id="create" onSubmit={onSubmit}>
         <div className="container">
-          <h1>Edit Game</h1>
+          <h1>Create Game</h1>
           <label htmlFor="leg-title">Legendary title:</label>
           <input
             type="text"
@@ -45,6 +46,7 @@ const Edit = () => {
             name="title"
             value={values.title}
             onChange={onChange}
+            placeholder="Enter game title..."
           />
 
           <label htmlFor="category">Category:</label>
@@ -54,6 +56,7 @@ const Edit = () => {
             name="category"
             value={values.category}
             onChange={onChange}
+            placeholder="Enter game category..."
           />
 
           <label htmlFor="levels">MaxLevel:</label>
@@ -61,9 +64,10 @@ const Edit = () => {
             type="number"
             id="maxLevel"
             name="maxLevel"
-            min="1"
             value={values.maxLevel}
             onChange={onChange}
+            min="1"
+            placeholder="1"
           />
 
           <label htmlFor="game-img">Image:</label>
@@ -73,20 +77,20 @@ const Edit = () => {
             name="imageUrl"
             value={values.imageUrl}
             onChange={onChange}
+            placeholder="Upload a photo..."
           />
 
           <label htmlFor="summary">Summary:</label>
           <textarea
             name="summary"
-            id="summary"
-            onChange={onChange}
             value={values.summary}
-          />
+            onChange={onChange}
+            id="summary"
+          ></textarea>
           <input className="btn submit" type="submit" value="Edit Game" />
         </div>
       </form>
     </section>
   );
 };
-
 export default Edit;

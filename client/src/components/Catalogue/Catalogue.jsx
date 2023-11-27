@@ -11,23 +11,17 @@ const Catalogue = () => {
     gameService
       .getAll()
       .then((result) => setGames(result))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-
-  console.log(games);
 
   return (
     <section id="catalog-page">
       <h1>All Games</h1>
-      {/* <!-- Display div: with information about every game (if any) --> */}
 
       {games.map((game) => (
-        <GameItem key={game._id} {...game} />
-        // <GameItem
-        //   title={game.title}
-        //   imageUrl={game.imageUrl}
-        //   category={game.category}
-        // />
+        <GameListItem key={game._id} {...game} />
       ))}
 
       {games.length === 0 && <h3 className="no-articles">No articles yet</h3>}
